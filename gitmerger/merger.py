@@ -4,7 +4,8 @@ CLI to synchronize meta data of git activities of one account to another.
 
 import os
 from datetime import datetime, timedelta
-from github import Github
+import hashlib
+
 from gitmerger.tokens import *
 from git import Repo 
 
@@ -21,43 +22,27 @@ class Commit:
 
 class Merger:
 
-  __g = None
-  __access_token = None 
-  __dest_repos = []
+  def __init__(self, author, src_path, dest_path, company):
+    # repos
+    self.src_repo = os.path.abspath(src_path)
+    src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
+    self.hashed_repo_name = hashlib.sha512(src_name.encode('uft-8')).hexdigest()[:20]
+    
+    self.dest_repo = os.path.abspath(dest_path)
 
-  def __init__(self, access_token, author, repo_path):
-    self.__access_token = access_token
-    self.__g = Github(access_token)
-
-    # destination repo
-    self.__dest_repos = self.__g.get_user().get_repos()
-    self.dest_repo = None
-
-    # source repo
-    self.repo_path = os.path.abspath(repo_path)
-    self.src_repo = Repo(self.repo_path)
+    # name of commiter in src path
     self.author = author
+    # company name where commits are imported from
+    self.company = company
+
+    # list of all filtered commits
+    self.commits = None
 
 
   @property
   def dest_repo(self):
     print(f'Getter: {self._dest_repo}')
     return self._dest_repo
-
-  @dest_repo.setter
-  def dest_repo(self, repo):
-    """ Set repo to either None or a valid repo name for the specified account. """
-
-    # allow setting equal to None
-    if repo == None:
-      self._dest_repo = None
-      return
-
-    # if possible set to a destination repo
-    for r in self.__dest_repos:
-      if r.name == repo or r.full_name == repo:
-        self._dest_repo = r
-        return
 
 
   def get_commits(self, since='14.days.ago'):
@@ -78,17 +63,41 @@ class Merger:
       if c.author.name == self.author and is_new:
         c = Commit(converted_date, c.hexsha)
         commits_filtered.append(c)
-        
+      
+      self.commits = commits_filtered
+
     return commits_filtered
 
+  def __create_directory():
+    """ Creates directory in destination repo with hashed name and one file with headers. """
+    # inspect directory structure
+    tree = src_repo._working_tree_dir
+    directories = [for f in os.listdir(tree) if os.isdir(f'{tree}/{f}')]
 
-  def print_props(self):
-    print(self.__g)
-    print(self.__access_token)
-    return
+    # create new directory if not already present
+    if self.hashed_repo_name not in directories:
+      # create new directory
+      os.mkdir(self.hashed_repo_name)
 
+    # init new file
+    file_name = f'{tree}/{self.hashed_repo_name}.txt'
+    with open(file_name, 'w') as f:
+      f.write('Company Name\t\tDate\t\tCommit Hex Sha\n') 
 
-  def merge(self, src_repo, dest_repo):
+    return file_name
+          
+
+  def merge(self, commits=None):
     """ Submit dummy commits in destination repo with meta data from source repo. """
+    # if not list of commits is provieded use the list of commits available from class
+    # this way someone can retrieve the commits and filter them additionally as they like
+    if commits == None:
+      commits = self.commits
+    
+    file_name = self.__create_directory()
+    for c in commits:
+      with open(file_name, 'w') as f:
+        f.write(f'{self.company}\t\t{c.date}\t\t{c.hexsha}')
+
     pass
 
