@@ -1,5 +1,5 @@
 import unittest
-import gitmerger as gm
+import gitmerge
 
 
 if __name__ == '__main__':
