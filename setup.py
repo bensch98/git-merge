@@ -17,7 +17,7 @@ setup(name='gitmerger',
       long_description=long_description,
       long_description_content_type='text/markdown',
       packages=['gitmerger'],
-      classifiers=CLASSIFIERS
+      classifiers=CLASSIFIERS,
       # prod dependencies
       install_requires=[
         'GitPython==3.1.24'
