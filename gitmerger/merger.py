@@ -72,7 +72,7 @@ class Merger:
     """ Creates directory in destination repo with hashed name and one file with headers. """
     # inspect directory structure
     tree = src_repo._working_tree_dir
-    directories = [for f in os.listdir(tree) if os.isdir(f'{tree}/{f}')]
+    directories = [f for f in os.listdir(tree) if os.isdir(f'{tree}/{f}')]
 
     # create new directory if not already present
     if self.hashed_repo_name not in directories:
