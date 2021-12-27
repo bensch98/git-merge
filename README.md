@@ -8,7 +8,7 @@ GitMerger solves this problem by importing meta data of your work commits to a d
 
 Easiest way:
 ```bash
-pip install git-merger
+pip install gitmerge
 ```
 
 Or you can also install it from source.
@@ -18,6 +18,21 @@ If you have nice ideas, feel free to open a PR.
 
 ## Usage
 
-The preferred way to use this is via the command line tool.
-However you could also use the package itself and experiment with it.
+So far this package has to be used in code like this:
+```python
+from gitmerge.merge import Merger
+m = Merger('USERNAME', '../PATH/TO/SOURCE/REPO', '../PATH/TO/DESTINATION/REPO', 'COMPANY_NAME')
+commits = m.get_commits()
+m.merge(commits)
+m.push
+```
 
+However, a CLI is already in work to simplify the whole process.
+
+## TODOs
+
+* Documentation (README / Sphinx ?)
+* Unittests
+* Github Actions (workflows)
+* Command-line interface with click
+* more configuration options
