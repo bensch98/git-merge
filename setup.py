@@ -8,7 +8,7 @@ CLASSIFIERS = [
   'License :: OSI Approved :: MIT License'
 ]
 
-setup(name='gitmerger',
+setup(name='gitmerge',
       version='0.0.1',
       description='Adding git commits from von repo to another.',
       author='Benedikt Scheffler',
@@ -16,7 +16,7 @@ setup(name='gitmerger',
       license='MIT',
       long_description=long_description,
       long_description_content_type='text/markdown',
-      packages=['gitmerger'],
+      packages=['gitmerge'],
       classifiers=CLASSIFIERS,
       # prod dependencies
       install_requires=[

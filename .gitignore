@@ -1,7 +1,10 @@
-# python stuff
+### Python ###
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
+*.py[cod]
 
-# env file
-constants.py
+# Distribution / packaging
+eggs/
+.eggs/
+*.egg-info/
 
