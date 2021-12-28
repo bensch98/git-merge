@@ -8,6 +8,16 @@ CLASSIFIERS = [
   'License :: OSI Approved :: MIT License'
 ]
 
+INSTALL_REQUIREMENTS = [
+  'GitPython==3.1.24',
+  'click'
+]
+
+DEV_REQUIREMENTS = [
+  'GitPython>=3.1.24',
+  'click'
+]
+
 setup(name='gitmerge',
       version='0.0.1',
       description='Adding git commits from von repo to another.',
@@ -22,13 +32,9 @@ setup(name='gitmerge',
         'console_scripts': ['gitmerge=gitmerge.gitmerge:gitmerge']
       },
       # prod dependencies
-      install_requires=[
-        'GitPython==3.1.24'
-      ],
+      install_requires=INSTALL_REQUIREMENTS,
       # dev dependencies
       extras_require={
-        'dev': [
-          'GitPython>=3.1.24'
-        ]
+        'dev': DEV_REQUIREMENTS
       },
       python_requires='>=3.8')
