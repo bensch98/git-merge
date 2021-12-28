@@ -18,6 +18,9 @@ setup(name='gitmerge',
       long_description_content_type='text/markdown',
       packages=['gitmerge'],
       classifiers=CLASSIFIERS,
+      entry_points={
+        'console_scripts': ['gitmerge=gitmerge.gitmerge:gitmerge']
+      },
       # prod dependencies
       install_requires=[
         'GitPython==3.1.24'
