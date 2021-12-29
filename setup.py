@@ -19,8 +19,8 @@ DEV_REQUIREMENTS = [
 ]
 
 setup(name='gitmerge',
-      version='0.0.1',
-      description='Adding git commits from von repo to another.',
+      version='0.0.2',
+      description='Add your git commits from your corporate account to your private profile with gitmerge.',
       author='Benedikt Scheffler',
       author_email='scheffler.benedikt@gmail.com',
       license='MIT',
