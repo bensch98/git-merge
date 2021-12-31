@@ -64,6 +64,16 @@ class Merger:
 
     return commits_filtered
 
+  def preview(self, commits):
+    """ Print out a review of the commits. """ 
+    print('\tHash\tDate') 
+    max = len(commits)
+    for idx, c in enumerate(commits):
+      print(f'{idx} - {c.hexsha} | {c.date}') 
+    print('------------------------------------------------------------------')
+    print(f'{idx} total changes that can be committed / pushed')
+    print(f'Print the same statement without --list flag for committing and pushing it')
+
   def __create_directory(self):
     """ Creates directory in destination repo with hashed name and one file with headers. """
     # inspect directory structure
@@ -82,7 +92,6 @@ class Merger:
 
     return file_name
           
-
   def merge(self, commits=None):
     """ Submit dummy commits in destination repo with meta data from source repo. """
     # if not list of commits is provieded use the list of commits available from class
