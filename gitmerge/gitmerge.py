@@ -25,7 +25,13 @@ def merge(author, src, dest, company, _list):
     m.merge(commits)
     m.push()
   else:
-    m.preview(commits)   
+    # prints basic preview of changes that would've been committed and pushed
+    click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green'))
+    for idx, c in enumerate(commits):
+      click.echo(f'{idx}\t{c.hexsha} | {c.date}')
+    click.echo(click.style('----------------------------------------------------------------------------', fg='green'))
+    click.echo(f'{idx} total changes that can abe committed / pushed')
+    click.echo('Print the same statement without --list flag for committing and pushing it.')
 
 
 gitmerge.add_command(merge)
