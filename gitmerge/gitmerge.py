@@ -16,20 +16,21 @@ def gitmerge():
 @click.option('--src', '-s', required=True, help='Path to source repo which the contributions were committed.')
 @click.option('--dest', '-d', required=True, help='Path to destination repo which the contributions should be transferred to.')
 @click.option('--company', '-c', required=True, help='Company name where you at for this repo.')
+@click.option('--since', required=False, default=14, help='Consider commits since date, days, month, years ago.')
 @click.option('--list', '-l', '_list', required=False, is_flag=True, help='Only list the commits, instead of committing and pushing them to the mock repo.')
-def merge(author, src, dest, company, _list):
+def merge(author, src, dest, company, _list, since):
   m = Merger(author, src, dest, company)
-  commits = m.get_commits()
+  commits = m.get_commits(since)
   
   if not _list:
     m.merge(commits)
     m.push()
   else:
     # prints basic preview of changes that would've been committed and pushed
-    click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green'))
+    click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
     for idx, c in enumerate(commits):
       click.echo(f'{idx}\t{c.hexsha} | {c.date}')
-    click.echo(click.style('----------------------------------------------------------------------------', fg='green'))
+    click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
     click.echo(f'{idx} total changes that can abe committed / pushed')
     click.echo('Print the same statement without --list flag for committing and pushing it.')
 

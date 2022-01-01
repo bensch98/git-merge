@@ -38,7 +38,7 @@ class Merger:
     # list of all filtered commits
     self.commits = None
 
-  def get_commits(self, days_ago=14):
+  def get_commits(self, since=14):
     """ Get all commits in specified range """
     
     # get list of commits
@@ -53,7 +53,7 @@ class Merger:
       iso_date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(c.committed_date))
       
       # calc date x days ago and check if commit date is newer
-      is_new = converted_date > datetime.now()-timedelta(days=days_ago)
+      is_new = converted_date > datetime.now()-timedelta(days=since)
 
       # filter commits based on author and if commits were committed in last x period
       if c.author.name == self.author and is_new:
