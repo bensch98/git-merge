@@ -6,6 +6,7 @@ import os
 from datetime import datetime, timedelta
 import time
 import hashlib
+import re
 
 from git import Repo 
 
@@ -38,9 +39,33 @@ class Merger:
     # list of all filtered commits
     self.commits = None
 
+  def __since2days(self, since):
+    """ Parses the input of since into days. """
+    
+    # matches formats like 1.y, 12.m, 234.d, 2.w
+    # does not match any date like formats like 2021-01-01
+    regex = "^([0-9]+(?!-))(?:\.(y|m|d|w))?$"
+    m = re.search(regex, since)
+    if m.group(0) is not None:
+      print(m.group(1))
+      print(m.group(2))
+      return
+    
+    # matches formats like 2021-01-02, 2021/9/30, 2021-1-1
+    # format can be either YYYY-MM-DD or YYYY/MM/DD
+    # single digits are allowed in days or months
+    regex = "^(\d{4})(-|/)(0[1-9]|1[0-2])(-|/)(0[1-9]|[12][0-9]|3[01])$"
+    m = re.search(regex, since)
+    if m.group(0) is not None:
+      print(m.group(1))
+      print(m.group(3))
+      print(m.group(5))
+      return
+      
+
   def get_commits(self, since=14):
     """ Get all commits in specified range """
-    
+    since = __since2days(since)
     # get list of commits
     commits = list(self.src_repo.iter_commits('--all'))
 

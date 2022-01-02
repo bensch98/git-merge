@@ -10,12 +10,14 @@ CLASSIFIERS = [
 
 INSTALL_REQUIREMENTS = [
   'GitPython==3.1.24',
-  'click'
+  'click',
+  'regex'
 ]
 
 DEV_REQUIREMENTS = [
   'GitPython>=3.1.24',
-  'click'
+  'click',
+  'regex'
 ]
 
 setup(name='gitmerge',
