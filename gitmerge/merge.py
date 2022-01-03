@@ -4,6 +4,7 @@ CLI to synchronize meta data of git activities of one account to another.
 
 import os
 from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 import time
 import hashlib
 import re
@@ -41,31 +42,46 @@ class Merger:
 
   def __since2days(self, since):
     """ Parses the input of since into days. """
-    
-    # matches formats like 1.y, 12.m, 234.d, 2.w
-    # does not match any date like formats like 2021-01-01
-    regex = "^([0-9]+(?!-))(?:\.(y|m|d|w))?$"
-    m = re.search(regex, since)
-    if m.group(0) is not None:
-      print(m.group(1))
-      print(m.group(2))
-      return
-    
+    # default to commits of last week if None value is passed in since
+    if since is None:
+      since = '1w'
+
+    dte = datetime.now() # init reference date as now
+
     # matches formats like 2021-01-02, 2021/9/30, 2021-1-1
     # format can be either YYYY-MM-DD or YYYY/MM/DD
     # single digits are allowed in days or months
-    regex = "^(\d{4})(-|/)(0[1-9]|1[0-2])(-|/)(0[1-9]|[12][0-9]|3[01])$"
+    regex = "^(\d{4})(-|/)(?:0?[1-9]|1[0-2])(-|/)(?:0?[1-9]|[12][0-9]|3[01])$"
     m = re.search(regex, since)
-    if m.group(0) is not None:
-      print(m.group(1))
-      print(m.group(3))
-      print(m.group(5))
-      return
-      
+    if m is not None and m.group(0) is not None:
+      x = re.sub('[-.:]', '/', m.group(0))
+      dte = datetime.strptime(x, '%Y/%m/%d')
+      return dte
+    
+    # matches formats like 1.y, 12.m, 234.d, 2.w
+    # does not match any date like formats like 2021-01-01
+    regex = "([0-9]+(?!-))(?:(?:\.)?(d|w|m|y))?"
+    pattern = re.compile(regex)
+    matched = False
+    for (val, mode) in re.findall(pattern, since):
+      val = int(val)
+      if val is not None:
+        matched = True
+        if mode == 'y':
+          dte -= relativedelta(years=val)
+        elif mode == 'm':
+          dte -= relativedelta(months=val)
+        elif mode == 'w':
+          dte -= relativedelta(weeks=val)
+        else: # mode is either specified as days or defaulted to days
+          dte -= relativedelta(days=val)
+    if matched:
+      return dte
 
-  def get_commits(self, since=14):
+  def get_commits(self, since='1w'):
     """ Get all commits in specified range """
-    since = __since2days(since)
+    # since gets converted from a string to a datetime object
+    since = self.__since2days(since)
     # get list of commits
     commits = list(self.src_repo.iter_commits('--all'))
 
@@ -78,7 +94,8 @@ class Merger:
       iso_date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(c.committed_date))
       
       # calc date x days ago and check if commit date is newer
-      is_new = converted_date > datetime.now()-timedelta(days=since)
+      #is_new = converted_date > datetime.now()-timedelta(days=since)
+      is_new = converted_date > since
 
       # filter commits based on author and if commits were committed in last x period
       if c.author.name == self.author and is_new:
