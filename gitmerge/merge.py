@@ -1,5 +1,5 @@
-""" Github Merger:
-CLI to synchronize meta data of git activities of one account to another.
+""" Github Merge:
+Tool to synchronize meta data of git activities of one account to another.
 """
 
 import os
@@ -16,7 +16,7 @@ class Commit:
   def __init__(self, date, hexsha):
     """ Git commit with relevant information for merge.
     :param date: Commit date as datetime object.
-    :commit chash: Commit hash as identifier for commit to avoid duplicate commits.
+    :param hexsha: Commit hash as identifier for commit to avoid duplicate commits.
     """
     self.date = date
     self.hexsha = hexsha
