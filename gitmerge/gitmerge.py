@@ -4,6 +4,7 @@ import click
 import git
 from gitmerge.merge import Merger, Commit
 from gitmerge.errors import MissingArgumentException, IncompatibleArgumentsException
+from gitmerge.dirchecker import DirectoryChecker
 
 """ CLI """
 
@@ -28,24 +29,38 @@ def merge(author, src, _dir, dest, company, _list, since):
   elif src is not None and _dir is not None:
     raise IncompatibleArgumentsException(["--src", "--dir"])
   
-  # init Merger and get commits of repo in time range
-  m = Merger(author, src, dest, company)
-  commits = m.get_commits(since)
-  
-  if not _list:
-    m.merge(commits)
-    m.push()
-  else:
-    # prints basic preview of changes that would've been committed and pushed
-    click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
-    idx = 0
-    for idx, c in enumerate(commits):
-      click.echo(f'{idx}\t{c.hexsha} | {c.date}')
-    click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
-    click.echo(f'{idx} total changes that can be committed / pushed')
-    click.echo('Print the same statement without --list flag for committing and pushing it.')
+  # get all .git sub directories of _dir
+  dc = DirectoryChecker(_dir)
+  git_dirs = dc.git_subdirs()
+  print(git_dirs)
+  # append src if no _dir mode was selected to iterate over list of length = 1
+  if src:
+    git_dirs.append(src)
+
+  for gd in git_dirs:
+    # init Merger and get commits of repo in time range
+    m = Merger(author, gd, dest, company)
+    commits = m.get_commits(since)
+
+    if not _list:
+      m.merge(commits)
+      m.push()
+    else:
+      # prints basic preview of changes that would've been committed and pushed
+      click.echo(click.style(f'Repository: {m.src_name}',  fg='blue', bold=True))
+      click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
+      idx = 0
+      for idx, c in enumerate(commits):
+        click.echo(f'{idx}\t{c.hexsha} | {c.date}')
+      click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
+      click.echo(f'{idx} total changes that can be committed / pushed\n\n')
+
+    if not _list:
+      click.echo('Print the same statement without --list flag for committing and pushing it.')
 
 
+# add all above listed commands to CLI
+# if necessary, commands can be disabled by commenting them out here (only for test purposes)
 gitmerge.add_command(merge)
 
 

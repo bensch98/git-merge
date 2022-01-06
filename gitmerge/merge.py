@@ -27,8 +27,8 @@ class Merger:
   def __init__(self, author, src_path, dest_path, company):
     # repos
     self.src_repo = Repo(os.path.abspath(src_path))
-    src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
-    self.hashed_repo_name = hashlib.sha512(src_name.encode('utf-8')).hexdigest()[:20]
+    self.src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
+    self.hashed_repo_name = hashlib.sha512(self.src_name.encode('utf-8')).hexdigest()[:20]
     
     self.dest_repo = Repo(os.path.abspath(dest_path))
 
@@ -94,7 +94,7 @@ class Merger:
       iso_date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(c.committed_date))
       
       # calc date x days ago and check if commit date is newer
-      #is_new = converted_date > datetime.now()-timedelta(days=since)
+      # !!!probably no longer needed!!! is_new = converted_date > datetime.now()-timedelta(days=since)
       is_new = converted_date > since
 
       # filter commits based on author and if commits were committed in last x period
@@ -105,16 +105,6 @@ class Merger:
       self.commits = commits_filtered
 
     return commits_filtered
-
-  def preview(self, commits):
-    """ Print out a review of the commits. """ 
-    print('\tHash\tDate') 
-    max = len(commits)
-    for idx, c in enumerate(commits):
-      print(f'{idx} - {c.hexsha} | {c.date}') 
-    print('------------------------------------------------------------------')
-    print(f'{idx} total changes that can be committed / pushed')
-    print(f'Print the same statement without --list flag for committing and pushing it')
 
   def __create_directory(self):
     """ Creates directory in destination repo with hashed name and one file with headers. """
