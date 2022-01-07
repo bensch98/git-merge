@@ -11,12 +11,14 @@ CLASSIFIERS = [
 INSTALL_REQUIREMENTS = [
   'GitPython==3.1.24',
   'click',
+  'click-help-colors',
   'regex'
 ]
 
 DEV_REQUIREMENTS = [
   'GitPython>=3.1.24',
   'click',
+  'click-help-colors',
   'regex'
 ]
 

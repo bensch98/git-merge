@@ -24,7 +24,7 @@ class Commit:
 
 class Merger:
 
-  def __init__(self, author, src_path, dest_path, company):
+  def __init__(self, author, src_path, dest_path, company=''):
     # repos
     self.src_repo = Repo(os.path.abspath(src_path))
     self.src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
