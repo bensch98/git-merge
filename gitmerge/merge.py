@@ -3,6 +3,7 @@ Tool to synchronize meta data of git activities of one account to another.
 """
 
 import os
+import sys
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 import time
@@ -10,6 +11,7 @@ import hashlib
 import re
 
 from git import Repo 
+from git.exc import InvalidGitRepositoryError
 
 class Commit:
   
@@ -26,11 +28,18 @@ class Merger:
 
   def __init__(self, author, src_path, dest_path, company=''):
     # repos
-    self.src_repo = Repo(os.path.abspath(src_path))
+    try:
+      self.src_repo = Repo(os.path.abspath(src_path))
+    except InvalidGitRepositoryError:
+      raise InvalidGitRepositoryError(src_path)
+      
     self.src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
     self.hashed_repo_name = hashlib.sha512(self.src_name.encode('utf-8')).hexdigest()[:20]
     
-    self.dest_repo = Repo(os.path.abspath(dest_path))
+    try:
+      self.dest_repo = Repo(os.path.abspath(dest_path))
+    except InvalidGitRepositoryError:
+      raise InvalidGitRepositoryError(dest_path)
 
     # name of commiter in src path
     self.author = author

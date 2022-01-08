@@ -1,4 +1,3 @@
-
 Change Log
 ==========
 
@@ -11,3 +10,16 @@ Change Log
 ------------------
 
 * Added command-line interface gitmerge for easy usage of tool.
+
+0.0.3 (2022-01-04)
+------------------
+
+* Added --since flag to specifiy time range of commits
+
+0.0.4 (2022-01-08) (in development)
+------------------
+
+* Extended --since flag with custom config, like e.g. 3m5d
+* Added CLI help colors
+* Added error handling with custom Exceptions: MissingArgumentException, IncompatibleArgumentsException
+* Added DirectoryChecker class: can return all git sub directories of a directory
