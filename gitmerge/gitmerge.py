@@ -62,13 +62,14 @@ def merge(author, src, _dir, dest, company, since, _list):
       click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
       idx = 0
       for idx, c in enumerate(commits):
-        click.echo(f'{idx}\t{c.hexsha} | {c.date}')
+        click.echo(f'{idx}\t{c.hexsha} | {c.date[:-6]}')
       click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
       click.echo(f'{idx} total changes that can be committed / pushed\n\n')
 
     if not _list:
       click.echo('Print the same statement without --list flag for committing and pushing it.')
 
+  click.echo(f'\nTotal repositorys listed: {len(git_dirs)}')
 
 # add all above listed commands to CLI
 # if necessary, commands can be disabled by commenting them out here (only for test purposes)

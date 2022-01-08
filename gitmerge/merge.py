@@ -1,4 +1,4 @@
-""" Github Merge:
+""" GitMerge:
 Tool to synchronize meta data of git activities of one account to another.
 """
 
