@@ -12,6 +12,7 @@ import re
 
 from git import Repo 
 from git.exc import InvalidGitRepositoryError
+from gitmerge.errors import InvalidRepositoryException
 
 class Commit:
   
@@ -30,16 +31,17 @@ class Merger:
     # repos
     try:
       self.src_repo = Repo(os.path.abspath(src_path))
-    except InvalidGitRepositoryError:
-      raise InvalidGitRepositoryError(src_path)
+    except InvalidGitRepositoryError as e:
+      # override with customized exception and message
+      raise InvalidRepositoryException(src_path)
       
     self.src_name = self.src_repo.remotes.origin.url.split('.git')[0].split('/')[-1]
     self.hashed_repo_name = hashlib.sha512(self.src_name.encode('utf-8')).hexdigest()[:20]
     
     try:
       self.dest_repo = Repo(os.path.abspath(dest_path))
-    except InvalidGitRepositoryError:
-      raise InvalidGitRepositoryError(dest_path)
+    except InvalidGitRepositoryError as e:
+      raise InvalidRepositoryException(dest_path)
 
     # name of commiter in src path
     self.author = author

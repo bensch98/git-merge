@@ -37,3 +37,4 @@ class InvalidRepositoryException(Exception):
 
   def __construct_message(self):
     msg = f'The specified path is no valid git repository. No .git dircectory found inside {self.dest}'
+    return msg
