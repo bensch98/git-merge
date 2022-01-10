@@ -16,10 +16,16 @@ Change Log
 
 * Added --since flag to specifiy time range of commits
 
-0.0.4 (2022-01-09)
+0.0.4 (2022-01-10)
 ------------------
 
 * Extended --since flag with custom config, like e.g. 3m5d
 * Added CLI help colors
 * Added error handling with custom Exceptions: MissingArgumentException, IncompatibleArgumentsException, InvalidRepositoryException
 * Added DirectoryChecker class: can return all git sub directories of a directory
+
+0.0.5 (2022-01-??) (in development)
+------------------
+
+* unittests
+* GitHub Actions
