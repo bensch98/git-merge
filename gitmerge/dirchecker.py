@@ -6,6 +6,7 @@ class DirectoryChecker:
 
   def git_subdirs(self, relpath=True):
     """ Checks all subdirectories of _dir whether there is a .git folder and returns them as a list.
+    :param relpath: Specify return type as list of absolute or relative paths.
     """
     # list of subdirectories
     git_dirs = next(os.walk(self._dir))[1]
@@ -17,6 +18,8 @@ class DirectoryChecker:
         git_dirs.pop(i)
 
     if relpath:
-      git_dirs = [f'{self._dir}/{gd}' for gd in git_dirs]
+      git_dirs = [os.path.relpath(f'{self._dir}/{gd}') for gd in git_dirs]
+    else:
+      git_dirs = [os.path.abspath(f'{self._dir}/{gd}') for gd in git_dirs]
         
     return git_dirs
