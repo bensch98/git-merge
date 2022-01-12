@@ -99,21 +99,15 @@ class Merger:
 
       # read in already transferred commits
       with open(filepath, 'r') as f:
-        committed = f.readlines()
+        transfers = f.readlines()
       
-      print(commits)
       regex = '([0-9a-f]){40}'
-      for i in range(len(committed)-1, -1, -1):
+      for i in range(len(transfers)-1, -1, -1):
         m = None
-        m = re.search(regex, committed[i])
+        m = re.search(regex, transfers[i])
         if m is not None:
-          print(f'\nMatched Regex: {m[0]}')
-          print(f'---------------------------------------------------------')
-          print(f'Check against:')
           for c in commits:
-            print(c.hexsha)
             if c.hexsha == m[0]:
-              print('Check successful')
               c.transferred = True
     return commits
 
@@ -140,8 +134,8 @@ class Merger:
         commit = Commit(iso_date, c.hexsha)
         commits_filtered.append(commit)
       
-      #self.commits = commits_filtered
-      self.commits = self.__postprocess(commits_filtered)
+    self.commits = commits_filtered
+    self.commits = self.__postprocess(commits_filtered)
 
     return commits_filtered
 

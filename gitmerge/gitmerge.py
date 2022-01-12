@@ -31,7 +31,7 @@ def gitmerge():
 @click.option('--dest', '-d', required=True, help='Path to the destination repo where the commits should be transferred to.')
 @click.option('--company', '-c', required=False, default='', help='Company name where you worked at for this repo.')
 @click.option('--since', '-s', required=False, default='1w', help='Consider commits since date, days, month, years ago. Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w.')
-@click.option('--list', '-l', '_list', required=False, is_flag=True, help='Only list the commits, instead of committing and pushing them to the mock repo.')
+@click.option('--list', '-l', '_list', required=False, is_flag=True, help='Only list the commits, instead of committing and pushing them to the mock repo. Red highlighted commits have already been transferred in the past to the specified destination and are automatically ignored.')
 def merge(author, src, _dir, dest, company, since, _list):
   
   # check if args are missing or incompatible args where specified
@@ -64,7 +64,11 @@ def merge(author, src, _dir, dest, company, since, _list):
       click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
       idx = 0
       for idx, c in enumerate(commits):
-        click.echo(f'{idx}\t{c.hexsha} | {c.date[:-6]} | {c.transferred}')
+        if not c.transferred:
+          click.echo(f'{idx}\t{c.hexsha} | {c.date[:-6]}')
+        else:
+          click.echo(click.style(f'{idx}\t{c.hexsha} | {c.date[:-6]}', fg='red'))
+          
       click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
       click.echo(f'{idx} total changes that can be committed / pushed\n\n')
 
