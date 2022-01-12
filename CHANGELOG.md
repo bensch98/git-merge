@@ -27,5 +27,6 @@ Change Log
 0.0.5 (2022-01-??) (in development)
 ------------------
 
-* unittests
+* unittests for these classes: Commit, DirChecker
+* CLI: highlighting commits that have already be transferred before and automatic preventing to transfer them again
 * GitHub Actions
