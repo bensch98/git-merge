@@ -13,6 +13,7 @@ import re
 from git import Repo 
 from git.exc import InvalidGitRepositoryError
 from gitmerge.errors import InvalidRepositoryException
+from gitmerge.dirchecker import DirectoryChecker
 
 class Commit:
   
@@ -23,6 +24,7 @@ class Commit:
     """
     self.date = date
     self.hexsha = hexsha
+    self.transferred = False
     
 
 class Merger:
@@ -89,6 +91,32 @@ class Merger:
     if matched:
       return dte
 
+  def __postprocess(self, commits):
+    """ Filter out commits that have already been transferred to the destination repo. """
+    dc = DirectoryChecker()
+    if dc.repo_exists(self.dest_repo, self.hashed_repo_name):
+      filepath = f'{self.dest_repo.working_dir}/{self.hashed_repo_name}/test.txt'
+
+      # read in already transferred commits
+      with open(filepath, 'r') as f:
+        committed = f.readlines()
+      
+      print(commits)
+      regex = '([0-9a-f]){40}'
+      for i in range(len(committed)-1, -1, -1):
+        m = None
+        m = re.search(regex, committed[i])
+        if m is not None:
+          print(f'\nMatched Regex: {m[0]}')
+          print(f'---------------------------------------------------------')
+          print(f'Check against:')
+          for c in commits:
+            print(c.hexsha)
+            if c.hexsha == m[0]:
+              print('Check successful')
+              c.transferred = True
+    return commits
+
   def get_commits(self, since='1w'):
     """ Get all commits in specified range """
     # since gets converted from a string to a datetime object
@@ -105,7 +133,6 @@ class Merger:
       iso_date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(c.committed_date))
       
       # calc date x days ago and check if commit date is newer
-      # !!!probably no longer needed!!! is_new = converted_date > datetime.now()-timedelta(days=since)
       is_new = converted_date > since
 
       # filter commits based on author and if commits were committed in last x period
@@ -113,7 +140,8 @@ class Merger:
         commit = Commit(iso_date, c.hexsha)
         commits_filtered.append(commit)
       
-      self.commits = commits_filtered
+      #self.commits = commits_filtered
+      self.commits = self.__postprocess(commits_filtered)
 
     return commits_filtered
 

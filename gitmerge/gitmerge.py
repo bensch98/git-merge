@@ -41,8 +41,10 @@ def merge(author, src, _dir, dest, company, since, _list):
     raise IncompatibleArgumentsException(["--src", "--dir"])
 
   # get all .git sub directories of _dir
-  dc = DirectoryChecker(_dir)
-  git_dirs = dc.git_subdirs()
+  git_dirs = []
+  if _dir is not None:
+    dc = DirectoryChecker(_dir)
+    git_dirs = dc.git_subdirs()
 
   # append src if no _dir mode was selected to iterate over list of length = 1
   if src:
@@ -62,7 +64,7 @@ def merge(author, src, _dir, dest, company, since, _list):
       click.echo(click.style('\tHash\t\t\t\t\t   Date', fg='green', bold=True))
       idx = 0
       for idx, c in enumerate(commits):
-        click.echo(f'{idx}\t{c.hexsha} | {c.date[:-6]}')
+        click.echo(f'{idx}\t{c.hexsha} | {c.date[:-6]} | {c.transferred}')
       click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
       click.echo(f'{idx} total changes that can be committed / pushed\n\n')
 

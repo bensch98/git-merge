@@ -1,7 +1,7 @@
 import os
 
 class DirectoryChecker:
-  def __init__(self, _dir):
+  def __init__(self, _dir='.'):
     self._dir = _dir
 
   def git_subdirs(self, relpath=True):
@@ -23,3 +23,12 @@ class DirectoryChecker:
       git_dirs = [os.path.abspath(f'{self._dir}/{gd}') for gd in git_dirs]
         
     return git_dirs
+  
+  def repo_exists(self, repo, dir_name):
+    """ Checks whether a src repo already exists from past imports in the dest repo as directory
+    :param path: Path of the src repo.
+    :param dir_name: Name to check if a matching directory exists. 
+    """
+    if os.path.isdir(f'{repo.working_dir}/{dir_name}'):
+      return True
+    return False

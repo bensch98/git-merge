@@ -22,6 +22,7 @@ class TestCommit(unittest.TestCase):
     for c in commits: 
       self.assertTrue(c.hexsha is not None)
       self.assertTrue(c.date is not None)
+      self.assertTrue(not c.transferred)
 
 if __name__ == '__main__':
   unittest.main()
