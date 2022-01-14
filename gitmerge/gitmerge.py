@@ -70,7 +70,8 @@ def merge(author, src, _dir, dest, company, since, _list):
           click.echo(click.style(f'{idx}\t{c.hexsha} | {c.date[:-6]}', fg='red'))
           
       click.echo(click.style('----------------------------------------------------------------------------', fg='green', bold=True))
-      click.echo(f'{idx} total changes that can be committed / pushed\n\n')
+      pushable = sum(map(lambda x : not x.transferred, commits))
+      click.echo(f'{pushable} total changes that can be transferred (red ones will be ignored)\n\n')
 
     if not _list:
       click.echo('Print the same statement without --list flag for committing and pushing it.')

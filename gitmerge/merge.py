@@ -109,7 +109,7 @@ class Merger:
           for c in commits:
             if c.hexsha == m[0]:
               c.transferred = True
-    return commits
+    return commits.reverse()
 
   def get_commits(self, since='1w'):
     """ Get all commits in specified range """
@@ -164,6 +164,9 @@ class Merger:
     if commits == None:
       commits = self.commits
     
+    # filter already transferred commits
+    commits = [c for c in commits if c.transferred]
+
     file_name = self.__create_directory()
     for c in commits:
       with open(file_name, 'a') as f:
