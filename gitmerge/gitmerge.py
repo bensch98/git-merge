@@ -30,9 +30,10 @@ def gitmerge():
 @click.option('--dir', '_dir', required=False, help='Path to a directory, where all subfolders with a .git directory are considered. This is a shortcut for multiple single statements if you want to transfer commtis of several source repos into your mock repo.')
 @click.option('--dest', '-d', required=True, help='Path to the destination repo where the commits should be transferred to.')
 @click.option('--company', '-c', required=False, default='', help='Company name where you worked at for this repo.')
-@click.option('--since', '-s', required=False, default='1w', help='Consider commits since date, days, month, years ago. Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w.')
+@click.option('--since', '-s', required=False, default='1w', help='Consider commits since date, days, month, years ago. Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w. [DEFAULT = 1w]')
+@click.option('--until', '-u', required=False, default='0d', help='Consider commits until date, days, month, years ago. Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w. [DEFAULT = 0d]')
 @click.option('--list', '-l', '_list', required=False, is_flag=True, help='Only list the commits, instead of committing and pushing them to the mock repo. Red highlighted commits have already been transferred in the past to the specified destination and are automatically ignored.')
-def merge(author, src, _dir, dest, company, since, _list):
+def merge(author, src, _dir, dest, company, since, until, _list):
   
   # check if args are missing or incompatible args where specified
   if src is None and _dir is None:
@@ -53,7 +54,7 @@ def merge(author, src, _dir, dest, company, since, _list):
   for gd in git_dirs:
     # init Merger and get commits of repo in time range
     m = Merger(author, gd, dest, company)
-    commits = m.get_commits(since)
+    commits = m.get_commits(since, until)
 
     if not _list:
       m.merge(commits)

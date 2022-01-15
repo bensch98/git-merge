@@ -54,7 +54,7 @@ class Merger:
     self.commits = None
 
   def __since2days(self, since):
-    """ Parses the input of since into days. """
+    """ Parses the input into days ago. """
     # default to commits of last week if None value is passed in since
     if since is None:
       since = '1w'
@@ -111,10 +111,11 @@ class Merger:
               c.transferred = True
     return commits.reverse()
 
-  def get_commits(self, since='1w'):
+  def get_commits(self, since='1w', until='0d'):
     """ Get all commits in specified range """
     # since gets converted from a string to a datetime object
     since = self.__since2days(since)
+    until = self.__since2days(until)
     # get list of commits
     commits = list(self.src_repo.iter_commits('--all'))
 
@@ -127,7 +128,10 @@ class Merger:
       iso_date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime(c.committed_date))
       
       # calc date x days ago and check if commit date is newer
-      is_new = converted_date > since
+      is_new = converted_date >= since and converted_date <= until
+      print(converted_date)
+      print(since)
+      print(until)
 
       # filter commits based on author and if commits were committed in last x period
       if c.author.name == self.author and is_new:
