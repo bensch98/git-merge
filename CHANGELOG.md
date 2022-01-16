@@ -29,4 +29,5 @@ Change Log
 
 * unittests for these classes: Commit, DirChecker
 * CLI: highlighting commits that have already be transferred before and automatic preventing to transfer them again
+* Added --until flag for filtering in both directions in time
 * GitHub Actions
