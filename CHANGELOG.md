@@ -24,10 +24,15 @@ Change Log
 * Added error handling with custom Exceptions: MissingArgumentException, IncompatibleArgumentsException, InvalidRepositoryException
 * Added DirectoryChecker class: can return all git sub directories of a directory
 
-0.0.5 (2022-01-??) (in development)
+0.0.5 (2022-01-18)
 ------------------
 
-* unittests for these classes: Commit, DirChecker
+* unittests for: Commit, DirChecker
 * CLI: highlighting commits that have already be transferred before and automatic preventing to transfer them again
 * Added --until flag for filtering in both directions in time
-* GitHub Actions
+
+0.0.6 (2022-02-??) (in development)
+------------------
+
+* unittests for:  
+* GitHub Actions / Continuous Integration

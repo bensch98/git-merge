@@ -3,6 +3,7 @@
 As many developers have to use a separate Git account during work, a large amount of their work is not tracked in their personal profile which is often a good reference on resumes etc.
 GitMerge solves this problem by importing meta data of your work commits to a dummy repo in your private Git account.
 
+---
 
 ## Installation
 
@@ -12,15 +13,23 @@ pip install gitmerge
 ```
 
 Or you can also install it from source.
+For development clone the repo and install it with `-e` flag.
+
+```bash
+git clone git@github.com:bensch98/git-merge.git
+cd git-merge
+pip install -e .
+```
 
 If you have nice ideas, feel free to open a PR.
 
+---
 
 ## Usage
 
 The easiest way to use this package is via its CLI.
 ```bash
-gitmerge merge --author [GIT_NAME] --src [SOURCE_REPO] --dest [DESTINATION_REPO] --company [COMPANY_NAME] --since 2021-12-31
+gitmerge merge --author [GIT_NAME] --src [SOURCE_REPO] --dest [DESTINATION_REPO] --company [COMPANY_NAME] --since 2021-12-31 --until 2022-01-10
 ```
 
 Flags:
@@ -42,6 +51,7 @@ Examples for --since flag:
  
 --since defaults to the last 7 days if nothing was specified.
 Each mode (y = year, m = month, w = week, d = days) defaults to 0 if omitted. Therefore 2d == 0y0m0w2d.
+--until default to current datetime
 
 
 The package can also be imported and used like this.
@@ -63,5 +73,3 @@ m.push
 
 Help with these TODOs or good advice is greatly appreciated.
 For any questions open an issue.
-I check these almost every day.
-For collaboration we can communicate via Discord if needed.
