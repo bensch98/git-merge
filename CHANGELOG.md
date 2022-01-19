@@ -24,7 +24,7 @@ Change Log
 * Added error handling with custom Exceptions: MissingArgumentException, IncompatibleArgumentsException, InvalidRepositoryException
 * Added DirectoryChecker class: can return all git sub directories of a directory
 
-0.0.5 (2022-01-18)
+0.0.5 (2022-01-19)
 ------------------
 
 * unittests for: Commit, DirChecker

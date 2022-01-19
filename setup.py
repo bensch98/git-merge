@@ -23,7 +23,7 @@ DEV_REQUIREMENTS = [
 ]
 
 setup(name='gitmerge',
-      version='0.0.4',
+      version='0.0.5',
       description='Add your git commits from your corporate account to your private profile with gitmerge.',
       author='Benedikt Scheffler',
       author_email='scheffler.benedikt@gmail.com',
