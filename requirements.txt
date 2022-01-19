@@ -1,7 +1,7 @@
 click==8.0.3
 click-help-colors==0.9.1
 gitdb==4.0.9
--e git+ssh://git@github.com/bensch98/git-merge.git@46b4f24c02c82795fc025db6dadb5ef2f7be659b#egg=gitmerge
+gitmerge==0.0.5
 GitPython==3.1.24
 regex==2022.1.18
 smmap==5.0.0
