@@ -3,10 +3,10 @@
 import click
 from click_help_colors import HelpColorsGroup, HelpColorsCommand
 import git
+
 from gitmerge.merge import Merger, Commit
 from gitmerge.errors import MissingArgumentException, IncompatibleArgumentsException
 from gitmerge.dirchecker import DirectoryChecker
-
 from gitmerge.cout import Cout
 
 """ CLI """
@@ -54,6 +54,7 @@ def merge(author, src, _dir, dest, company, since, until, _list, columns):
   if src:
     git_dirs.append(src)
 
+  pushable = 0
   for gd in git_dirs:
     # init Merger and get commits of repo in time range
     m = Merger(author, gd, dest, company)
@@ -63,7 +64,9 @@ def merge(author, src, _dir, dest, company, since, until, _list, columns):
       m.merge(commits)
       m.push()
     else:
-      cout = Cout(m, commits, git_dirs, columns).list()
+      cout = Cout(m, commits, git_dirs, columns)
+      pushable += cout.list()
+  cout.summary(pushable)
 
 
 # add all above listed commands to CLI
