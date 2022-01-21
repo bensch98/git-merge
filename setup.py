@@ -16,10 +16,7 @@ INSTALL_REQUIREMENTS = [
 ]
 
 DEV_REQUIREMENTS = [
-  'GitPython>=3.1.24',
-  'click',
-  'click-help-colors',
-  'regex'
+  'coverage'
 ]
 
 setup(name='gitmerge',
