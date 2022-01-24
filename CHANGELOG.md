@@ -31,9 +31,8 @@ Change Log
 * CLI: highlighting commits that have already be transferred before and automatic preventing to transfer them again
 * Added --until flag for filtering in both directions in time
 
-0.0.6 (2022-02-??) (in development)
+0.0.6 (2022-02-24) (in development)
 ------------------
 
-* Unit tests for:  
 * GitHub Actions / Continuous Integration
 * Custom column configurations

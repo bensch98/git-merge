@@ -1,7 +1,3 @@
-""" GitMerge:
-Tool to synchronize meta data of git activities of one account to another.
-"""
-
 import os
 import sys
 from datetime import datetime, timedelta
