@@ -6,9 +6,11 @@ __pycache__/
 # Distribution / packaging
 *.egg-info/
 /dist
+build
 
 # Vim files
-*.swp
+.*.swp
+.*.swo
 
 # unittests / coverage
 .coverage
