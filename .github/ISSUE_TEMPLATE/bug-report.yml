@@ -8,7 +8,7 @@ body:
     label: 🐛 Bug Description
     description: |
       Please provide a clear and concise description of what the bug is. If relevant, add a minimal example so that the bug can be reproduced.
-      Wrap all code snippets into ``` ```.
+      Wrap all code snippets into ```triple backticks```.
     placeholder: |
       A clear and concise description of what the bug is:
       
@@ -39,5 +39,5 @@ body:
       Links? References? Anything that will give us more context about the issue you are encountering!
 - type: markdown
   attributes:
-    value: >
+    value: |
       Thanks for contributing 🎉
