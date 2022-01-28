@@ -1,11 +1,11 @@
-name: 🐛 Bug Report
+name: 🐛 Bug report
 description: Create a report to help us reproduce and fix the bug
 labels: [bug]
 
 body:
 - type: textarea
   attributes:
-    label: 🐛 Bug Description
+    label: 🐛 Bug description
     description: |
       Please provide a clear and concise description of what the bug is. If relevant, add a minimal example so that the bug can be reproduced.
       Wrap all code snippets into ```triple backticks```.
@@ -34,7 +34,7 @@ body:
     required: false
 - type: textarea
   attributes:
-    label: Further Information
+    label: Further information
     description: |
       Links? References? Anything that will give us more context about the issue you are encountering!
 - type: markdown
