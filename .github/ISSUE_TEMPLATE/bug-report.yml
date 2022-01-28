@@ -30,7 +30,6 @@ body:
       - **OS:** 
       - **Python version:** 
       - **gitmerge version:**
-    render: markdown
   validations:
     required: false
 - type: textarea
