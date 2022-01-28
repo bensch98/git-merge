@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Bug Description**
 A clear and concise description of what the bug is.
 
 **To Reproduce**
@@ -22,6 +22,7 @@ A clear and concise description of what you expected to happen.
 
 **Environment (please complete the following information):**
  - OS: 
+ - Python version
  - git-merge version: 
 
 **Additional context**
