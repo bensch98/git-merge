@@ -1,0 +1,42 @@
+name: 🐛 Bug Report
+description: Create a report to help us reproduce and fix the bug
+
+body:
+- type: textarea
+  attributes:
+    label: 🐛 Bug Description
+    description: |
+      Please provide a clear and concise description of what the bug is.
+      If relevant, add a minimal example so that the bug can be reproduced
+    placeholder: |
+      A clear and concise description of what the bug is:
+      ```text
+      
+      ```
+
+      ```python
+      # Sample code to reproduce the problem
+      ```
+
+      ```text
+      The error message you got, with the full traceback.
+      ```
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Versions
+    description: |
+      Please add information about your environment such as OS, Python version and the package version.
+    placeholder: |
+      ```text
+      - OS: 
+      - Python version: 
+      - gitmerge version: 
+      ```
+  validations:
+    required: false
+- type: markdown
+  attributes:
+    value: >
+      Thanks for contributing 🎉
