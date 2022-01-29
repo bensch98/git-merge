@@ -9,7 +9,8 @@ __pycache__/
 /build
 
 # Vim files
-*.swp
+.*.swp
+.*.swo
 
 # unittests / coverage
 .coverage

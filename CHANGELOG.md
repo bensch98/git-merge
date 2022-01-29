@@ -27,12 +27,12 @@ Change Log
 0.0.5 (2022-01-19)
 ------------------
 
-* unittests for: Commit, DirChecker
+* Unit tests for: Commit, DirChecker
 * CLI: highlighting commits that have already be transferred before and automatic preventing to transfer them again
 * Added --until flag for filtering in both directions in time
 
-0.0.6 (2022-02-??) (in development)
+0.0.6 (2022-02-25) (in development)
 ------------------
 
-* unittests for:  
 * GitHub Actions / Continuous Integration
+* Custom column configurations

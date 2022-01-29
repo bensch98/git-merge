@@ -16,14 +16,11 @@ INSTALL_REQUIREMENTS = [
 ]
 
 DEV_REQUIREMENTS = [
-  'GitPython>=3.1.24',
-  'click',
-  'click-help-colors',
-  'regex'
+  'coverage'
 ]
 
 setup(name='gitmerge',
-      version='0.0.5',
+      version='0.0.6',
       description='Add your git commits from your corporate account to your private profile with gitmerge.',
       author='Benedikt Scheffler',
       author_email='scheffler.benedikt@gmail.com',

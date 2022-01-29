@@ -1,7 +1,3 @@
-""" GitMerge:
-Tool to synchronize meta data of git activities of one account to another.
-"""
-
 import os
 import sys
 from datetime import datetime, timedelta
@@ -17,13 +13,16 @@ from gitmerge.dirchecker import DirectoryChecker
 
 class Commit:
   
-  def __init__(self, date, hexsha):
+  def __init__(self, date, hexsha, message='', repository='', company=''):
     """ Git commit with relevant information for merge.
     :param date: Commit date as datetime object.
     :param hexsha: Commit hash as identifier for commit to avoid duplicate commits.
     """
     self.date = date
     self.hexsha = hexsha
+    self.message = message
+    self.repository = repository
+    self.company = company
     self.transferred = False
     
 
@@ -129,13 +128,10 @@ class Merger:
       
       # calc date x days ago and check if commit date is newer
       is_new = converted_date >= since and converted_date <= until
-      print(converted_date)
-      print(since)
-      print(until)
 
       # filter commits based on author and if commits were committed in last x period
       if c.author.name == self.author and is_new:
-        commit = Commit(iso_date, c.hexsha)
+        commit = Commit(iso_date, c.hexsha, c.message, self.src_name, self.company)
         commits_filtered.append(commit)
       
     self.commits = commits_filtered
@@ -174,7 +170,7 @@ class Merger:
     file_name = self.__create_directory()
     for c in commits:
       with open(file_name, 'a') as f:
-        f.write(f'{self.company}\t\t{c.date}\t\t\t\t\t\t\t{c.hexsha}\n')
+        f.write(f'{self.company}\t\t{c.date}\t\t\t\t\t\t\t{c.hexsha}\t\t\t\t\t{c.summary}\n')
       os.environ['GIT_AUTHOR_DATE'] = c.date
       os.environ['GIT_COMMITTER_DATE'] = c.date
       try:
