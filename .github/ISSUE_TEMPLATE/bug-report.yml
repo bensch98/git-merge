@@ -1,0 +1,43 @@
+name: 🐛 Bug report
+description: Create a report to help us reproduce and fix the bug
+labels: [bug]
+
+body:
+- type: textarea
+  attributes:
+    label: 🐛 Bug description
+    description: |
+      Please provide a clear and concise description of what the bug is. If relevant, add a minimal example so that the bug can be reproduced.
+      Wrap all code snippets into ```triple backticks```.
+    placeholder: |
+      A clear and concise description of what the bug is:
+      
+      ```python
+      # sample code to reproduce the problem
+      ```
+
+      ```text
+      The error message you got, with the full traceback.
+      ```
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Environment
+    description: |
+      Please add information about your environment such as OS, Python version and the package version.
+    value: |
+      - **OS:** 
+      - **Python version:** 
+      - **gitmerge version:**
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Further information
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+- type: markdown
+  attributes:
+    value: |
+      Thanks for contributing 🎉
