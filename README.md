@@ -32,13 +32,47 @@ The easiest way to use this package is via its CLI.
 gitmerge merge --author [GIT_NAME] --src [SOURCE_REPO] --dest [DESTINATION_REPO] --company [COMPANY_NAME] --since 2021-12-31 --until 2022-01-10
 ```
 
+CLI:
+```text
+$ gitmerge merge --help
+Usage: gitmerge merge [OPTIONS]
+
+  Import git commits from one repo to another
+
+Options:
+  -a, --author TEXT   Name of the user whose commits of the source repo should
+                      be transferred.  [required]
+  --src TEXT          Path to source repo where the commits were created.
+  --dir TEXT          Path to a directory, where all subfolders with a .git
+                      directory are considered. This is a shortcut for
+                      multiple single statements if you want to transfer
+                      commtis of several source repos into your mock repo.
+  -d, --dest TEXT     Path to the destination repo where the commits should be
+                      transferred to.  [required]
+  --company TEXT      Company name where you worked at for this repo.
+  -s, --since TEXT    Consider commits since date, days, month, years ago.
+                      Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w. [DEFAULT = 1w]
+  -u, --until TEXT    Consider commits until date, days, month, years ago.
+                      Examples: 0y3m1w6d, 3m1w6d, 14d, 1d8w. [DEFAULT = 0d]
+  -l, --list          Only list the commits, instead of committing and pushing
+                      them to the mock repo. Red highlighted commits have
+                      already been transferred in the past to the specified
+                      destination and are automatically ignored.
+  -c, --columns TEXT  Name column that should be included.
+  --help              Show this message and exit.
+```
+
+
 Flags:
 - --author: Your Git username which was used for the commits. Only commits of this account will be merged into the destination repo. 
 - --src: Relative path to the source repository from which you want to import the commits.
+- --dir: Relative path to a directory where all subfolders with a .git directory are taken into account. If all repos are located in one parent folder, their commits can easily be transferred via one command.
 - --dest: Relative path to the destination/dummy repository where the commits will be imported into. For each repository a directory and file will be created where meta data of the commits will be stored.
 - --company: The name of the company which owns the repository. Can be omitted in the future.
 - --since: Specifies from where on the commits should be taken into account. Can be specified as date (2021-09-30, 2021/09/30, 2021-9-1, 2021/9/30, ...) or as a delta value.
+- --until: Specifies until which date the commits should be taken into account. Can be specified as date (2021-09-30, 2021/09/30, 2021-9-1, 2021/9/30, ...) or as a delta value.
 - --list: Can be used to view the commits which would be committed and pushed without this flag. It does nothing despite printing out the commits to the terminal.
+- --columns: Columns that should be considered. Possible columns are **hexsha**, **date**, **message**, **company**, **repository**.
 
 For more help use the *--help* flag of the CLI.
 
@@ -61,6 +95,19 @@ m = Merger('USERNAME', '../PATH/TO/SOURCE/REPO', '../PATH/TO/DESTINATION/REPO', 
 commits = m.get_commits()
 m.merge(commits)
 m.push
+```
+
+## Example
+
+```bash
+gitmerge merge \
+	--author bensch98
+	--dir ..
+	--dest ../dest_repo
+	--list
+	--since 2w
+	--until 2022-02-23
+	-c hexsha -c date -c message -c company -c repository
 ```
 
 ## TODOs
