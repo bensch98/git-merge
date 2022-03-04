@@ -5,18 +5,20 @@ with open('README.md', 'r') as fh:
 
 CLASSIFIERS = [
   'Programming Language :: Python :: 3',
-  'License :: OSI Approved :: MIT License'
+  'License :: OSI Approved :: MIT License',
 ]
 
 INSTALL_REQUIREMENTS = [
   'GitPython==3.1.24',
   'click',
   'click-help-colors',
-  'regex'
+  'regex',
 ]
 
 DEV_REQUIREMENTS = [
-  'coverage'
+  'coverage',
+  'sphinx',
+  'sphinx_rtd_theme',
 ]
 
 setup(name='gitmerge',
