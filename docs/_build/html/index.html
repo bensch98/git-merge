@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to gitmerge’s documentation! &mdash; gitmerge  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> gitmerge
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to gitmerge’s documentation!</a></li>
+<li><a class="reference internal" href="#gitmerge-package">gitmerge package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-gitmerge.cout">gitmerge.cout module</a></li>
+<li><a class="reference internal" href="#module-gitmerge.dirchecker">gitmerge.dirchecker module</a></li>
+<li><a class="reference internal" href="#module-gitmerge.errors">gitmerge.errors module</a></li>
+<li><a class="reference internal" href="#module-gitmerge.gitmerge">gitmerge.gitmerge module</a></li>
+<li><a class="reference internal" href="#module-gitmerge.merge">gitmerge.merge module</a></li>
+<li><a class="reference internal" href="#module-gitmerge">Module contents</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">gitmerge</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to gitmerge’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-gitmerge-s-documentation">
+<h1>Welcome to gitmerge’s documentation!<a class="headerlink" href="#welcome-to-gitmerge-s-documentation" title="Permalink to this headline"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="gitmerge-package">
+<h1>gitmerge package<a class="headerlink" href="#gitmerge-package" title="Permalink to this headline"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-gitmerge.cout">
+<span id="gitmerge-cout-module"></span><h2>gitmerge.cout module<a class="headerlink" href="#module-gitmerge.cout" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gitmerge.cout.Cout">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.cout.</span></span><span class="sig-name descname"><span class="pre">Cout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">merger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">git_dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('hexsha',</span> <span class="pre">'date',</span> <span class="pre">'message')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.cout.Cout.list">
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout.list" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.cout.Cout.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pushable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout.summary" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gitmerge.dirchecker">
+<span id="gitmerge-dirchecker-module"></span><h2>gitmerge.dirchecker module<a class="headerlink" href="#module-gitmerge.dirchecker" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gitmerge.dirchecker.DirectoryChecker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.dirchecker.</span></span><span class="sig-name descname"><span class="pre">DirectoryChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/dirchecker.html#DirectoryChecker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.dirchecker.DirectoryChecker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.dirchecker.DirectoryChecker.git_subdirs">
+<span class="sig-name descname"><span class="pre">git_subdirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/dirchecker.html#DirectoryChecker.git_subdirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.dirchecker.DirectoryChecker.git_subdirs" title="Permalink to this definition"></a></dt>
+<dd><p>Checks all subdirectories of _dir whether there is a .git folder and returns them as a list.
+:param relpath: Specify return type as list of absolute or relative paths.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.dirchecker.DirectoryChecker.repo_exists">
+<span class="sig-name descname"><span class="pre">repo_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/dirchecker.html#DirectoryChecker.repo_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.dirchecker.DirectoryChecker.repo_exists" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether a src repo already exists from past imports in the dest repo as directory
+:param path: Path of the src repo.
+:param dir_name: Name to check if a matching directory exists.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gitmerge.errors">
+<span id="gitmerge-errors-module"></span><h2>gitmerge.errors module<a class="headerlink" href="#module-gitmerge.errors" title="Permalink to this headline"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="gitmerge.errors.IncompatibleArgumentsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.errors.</span></span><span class="sig-name descname"><span class="pre">IncompatibleArgumentsException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/errors.html#IncompatibleArgumentsException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.errors.IncompatibleArgumentsException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="gitmerge.errors.InvalidRepositoryException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.errors.</span></span><span class="sig-name descname"><span class="pre">InvalidRepositoryException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/errors.html#InvalidRepositoryException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.errors.InvalidRepositoryException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="gitmerge.errors.MissingArgumentException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.errors.</span></span><span class="sig-name descname"><span class="pre">MissingArgumentException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/errors.html#MissingArgumentException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.errors.MissingArgumentException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-gitmerge.gitmerge">
+<span id="gitmerge-gitmerge-module"></span><h2>gitmerge.gitmerge module<a class="headerlink" href="#module-gitmerge.gitmerge" title="Permalink to this headline"></a></h2>
+</section>
+<section id="module-gitmerge.merge">
+<span id="gitmerge-merge-module"></span><h2>gitmerge.merge module<a class="headerlink" href="#module-gitmerge.merge" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gitmerge.merge.Commit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.merge.</span></span><span class="sig-name descname"><span class="pre">Commit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hexsha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repository</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Commit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Commit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gitmerge.merge.Merger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.merge.</span></span><span class="sig-name descname"><span class="pre">Merger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">author</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.merge.Merger.get_commits">
+<span class="sig-name descname"><span class="pre">get_commits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0d'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger.get_commits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger.get_commits" title="Permalink to this definition"></a></dt>
+<dd><p>Get all commits in specified range</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.merge.Merger.merge">
+<span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger.merge" title="Permalink to this definition"></a></dt>
+<dd><p>Submit dummy commits in destination repo with meta data from source repo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gitmerge.merge.Merger.push">
+<span class="sig-name descname"><span class="pre">push</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger.push"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger.push" title="Permalink to this definition"></a></dt>
+<dd><p>Push changes after merging one repo into another.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gitmerge">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-gitmerge" title="Permalink to this headline"></a></h2>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Benedikt Scheffler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gitmerge.merge &mdash; gitmerge  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> gitmerge
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">gitmerge</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>gitmerge.merge</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gitmerge.merge</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">dateutil.relativedelta</span> <span class="kn">import</span> <span class="n">relativedelta</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">git</span> <span class="kn">import</span> <span class="n">Repo</span> 
+<span class="kn">from</span> <span class="nn">git.exc</span> <span class="kn">import</span> <span class="n">InvalidGitRepositoryError</span>
+<span class="kn">from</span> <span class="nn">gitmerge.errors</span> <span class="kn">import</span> <span class="n">InvalidRepositoryException</span>
+<span class="kn">from</span> <span class="nn">gitmerge.dirchecker</span> <span class="kn">import</span> <span class="n">DirectoryChecker</span>
+
+<div class="viewcode-block" id="Commit"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Commit">[docs]</a><span class="k">class</span> <span class="nc">Commit</span><span class="p">:</span>
+  
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date</span><span class="p">,</span> <span class="n">hexsha</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">company</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Git commit with relevant information for merge.</span>
+<span class="sd">    :param date: Commit date as datetime object.</span>
+<span class="sd">    :param hexsha: Commit hash as identifier for commit to avoid duplicate commits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hexsha</span> <span class="o">=</span> <span class="n">hexsha</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">repository</span> <span class="o">=</span> <span class="n">repository</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">company</span> <span class="o">=</span> <span class="n">company</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">transferred</span> <span class="o">=</span> <span class="kc">False</span></div>
+    
+
+<div class="viewcode-block" id="Merger"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger">[docs]</a><span class="k">class</span> <span class="nc">Merger</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">src_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="n">company</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="c1"># repos</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">src_repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">src_path</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">InvalidGitRepositoryError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="c1"># override with customized exception and message</span>
+      <span class="k">raise</span> <span class="n">InvalidRepositoryException</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+      
+    <span class="bp">self</span><span class="o">.</span><span class="n">src_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_repo</span><span class="o">.</span><span class="n">remotes</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.git&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha512</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">src_name</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">20</span><span class="p">]</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span> <span class="o">=</span> <span class="n">Repo</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">dest_path</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">InvalidGitRepositoryError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="n">InvalidRepositoryException</span><span class="p">(</span><span class="n">dest_path</span><span class="p">)</span>
+
+    <span class="c1"># name of commiter in src path</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">author</span>
+    <span class="c1"># company name where commits are imported from</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">company</span> <span class="o">=</span> <span class="n">company</span>
+
+    <span class="c1"># list of all filtered commits</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">commits</span> <span class="o">=</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="nf">__since2days</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Parses the input into days ago. &quot;&quot;&quot;</span>
+    <span class="c1"># default to commits of last week if None value is passed in since</span>
+    <span class="k">if</span> <span class="n">since</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">since</span> <span class="o">=</span> <span class="s1">&#39;1w&#39;</span>
+
+    <span class="n">dte</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="c1"># init reference date as now</span>
+
+    <span class="c1"># matches formats like 2021-01-02, 2021/9/30, 2021-1-1</span>
+    <span class="c1"># format can be either YYYY-MM-DD or YYYY/MM/DD</span>
+    <span class="c1"># single digits are allowed in days or months</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="s2">&quot;^(\d</span><span class="si">{4}</span><span class="s2">)(-|/)(?:0?[1-9]|1[0-2])(-|/)(?:0?[1-9]|[12][0-9]|3[01])$&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">since</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">x</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[-.:]&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+      <span class="n">dte</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;%Y/%m/</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">dte</span>
+    
+    <span class="c1"># matches formats like 1.y, 12.m, 234.d, 2.w</span>
+    <span class="c1"># does not match any date like formats like 2021-01-01</span>
+    <span class="n">regex</span> <span class="o">=</span> <span class="s2">&quot;([0-9]+(?!-))(?:(?:\.)?(d|w|m|y))?&quot;</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
+    <span class="n">matched</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">since</span><span class="p">):</span>
+      <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">matched</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
+          <span class="n">dte</span> <span class="o">-=</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">years</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
+          <span class="n">dte</span> <span class="o">-=</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+          <span class="n">dte</span> <span class="o">-=</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">weeks</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># mode is either specified as days or defaulted to days</span>
+          <span class="n">dte</span> <span class="o">-=</span> <span class="n">relativedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">matched</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">dte</span>
+
+  <span class="k">def</span> <span class="nf">__postprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commits</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Filter out commits that have already been transferred to the destination repo. &quot;&quot;&quot;</span>
+    <span class="n">dc</span> <span class="o">=</span> <span class="n">DirectoryChecker</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">dc</span><span class="o">.</span><span class="n">repo_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span><span class="p">):</span>
+      <span class="n">filepath</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="o">.</span><span class="n">working_dir</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span><span class="si">}</span><span class="s1">/test.txt&#39;</span>
+
+      <span class="c1"># read in already transferred commits</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">transfers</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+      
+      <span class="n">regex</span> <span class="o">=</span> <span class="s1">&#39;([0-9a-f])</span><span class="si">{40}</span><span class="s1">&#39;</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">transfers</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">transfers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">hexsha</span> <span class="o">==</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+              <span class="n">c</span><span class="o">.</span><span class="n">transferred</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">commits</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Merger.get_commits"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger.get_commits">[docs]</a>  <span class="k">def</span> <span class="nf">get_commits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="o">=</span><span class="s1">&#39;1w&#39;</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s1">&#39;0d&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Get all commits in specified range &quot;&quot;&quot;</span>
+    <span class="c1"># since gets converted from a string to a datetime object</span>
+    <span class="n">since</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__since2days</span><span class="p">(</span><span class="n">since</span><span class="p">)</span>
+    <span class="n">until</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__since2days</span><span class="p">(</span><span class="n">until</span><span class="p">)</span>
+    <span class="c1"># get list of commits</span>
+    <span class="n">commits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">src_repo</span><span class="o">.</span><span class="n">iter_commits</span><span class="p">(</span><span class="s1">&#39;--all&#39;</span><span class="p">))</span>
+
+    <span class="c1"># filter for name of author</span>
+    <span class="n">commits_filtered</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">:</span>
+      <span class="c1"># convert unix timestamp to datetime object</span>
+      <span class="n">converted_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">committed_date</span><span class="p">))</span>
+      <span class="c1">#convert to iso date</span>
+      <span class="n">iso_date</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S +0000&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">gmtime</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">committed_date</span><span class="p">))</span>
+      
+      <span class="c1"># calc date x days ago and check if commit date is newer</span>
+      <span class="n">is_new</span> <span class="o">=</span> <span class="n">converted_date</span> <span class="o">&gt;=</span> <span class="n">since</span> <span class="ow">and</span> <span class="n">converted_date</span> <span class="o">&lt;=</span> <span class="n">until</span>
+
+      <span class="c1"># filter commits based on author and if commits were committed in last x period</span>
+      <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">author</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span> <span class="ow">and</span> <span class="n">is_new</span><span class="p">:</span>
+        <span class="n">commit</span> <span class="o">=</span> <span class="n">Commit</span><span class="p">(</span><span class="n">iso_date</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">hexsha</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">message</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">company</span><span class="p">)</span>
+        <span class="n">commits_filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
+      
+    <span class="bp">self</span><span class="o">.</span><span class="n">commits</span> <span class="o">=</span> <span class="n">commits_filtered</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">commits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__postprocess</span><span class="p">(</span><span class="n">commits_filtered</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">commits_filtered</span></div>
+
+  <span class="k">def</span> <span class="nf">__create_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Creates directory in destination repo with hashed name and one file with headers. &quot;&quot;&quot;</span>
+    <span class="c1"># inspect directory structure</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="o">.</span><span class="n">_working_tree_dir</span>
+    <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)]</span>
+
+    <span class="c1"># create new directory if not already present</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+      <span class="c1"># create new directory</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># init new file</span>
+    <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">tree</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hashed_repo_name</span><span class="si">}</span><span class="s1">/test.txt&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Company Name</span><span class="se">\t\t</span><span class="s1">Date</span><span class="se">\t\t</span><span class="s1">Commit Hex Sha</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> 
+
+    <span class="k">return</span> <span class="n">file_name</span>
+          
+<div class="viewcode-block" id="Merger.merge"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger.merge">[docs]</a>  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commits</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Submit dummy commits in destination repo with meta data from source repo. &quot;&quot;&quot;</span>
+    <span class="c1"># if not list of commits is provieded use the list of commits available from class</span>
+    <span class="c1"># this way someone can retrieve the commits and filter them additionally as they like</span>
+    <span class="k">if</span> <span class="n">commits</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">commits</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">commits</span>
+    
+    <span class="c1"># filter already transferred commits</span>
+    <span class="n">commits</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">transferred</span><span class="p">]</span>
+
+    <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__create_directory</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">commits</span><span class="p">:</span>
+      <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">company</span><span class="si">}</span><span class="se">\t\t</span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">date</span><span class="si">}</span><span class="se">\t\t\t\t\t\t\t</span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">hexsha</span><span class="si">}</span><span class="se">\t\t\t\t\t</span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">summary</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;GIT_AUTHOR_DATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">date</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;GIT_COMMITTER_DATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">date</span>
+      <span class="k">try</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="o">.</span><span class="n">git</span><span class="o">.</span><span class="n">commit</span><span class="p">(</span><span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;--allow-empty&#39;</span><span class="p">)</span>
+      <span class="k">except</span> <span class="n">git</span><span class="o">.</span><span class="n">exc</span><span class="o">.</span><span class="n">GitError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error in commit: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> </div>
+
+<div class="viewcode-block" id="Merger.push"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger.push">[docs]</a>  <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Push changes after merging one repo into another. &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">origin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dest_repo</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;origin&#39;</span><span class="p">)</span>
+      <span class="n">origin</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Some error occurred while pushing the code.&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Benedikt Scheffler.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
