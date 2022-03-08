@@ -27,6 +27,7 @@ class Commit:
     
 
 class Merger:
+  """ Handles related tasks to performing the transfer of the commits from one or more repositories to the destination repository. """
 
   def __init__(self, author, src_path, dest_path, company=''):
     # repos
@@ -111,7 +112,12 @@ class Merger:
     return commits.reverse()
 
   def get_commits(self, since='1w', until='0d'):
-    """ Get all commits in specified range """
+    """ Gets all commits in specified range.
+    :param since: Get all commits beginning from this date. 
+                  Can be either specified as timedelta or date.
+    :param until: Get all commits until this date. 
+                  Can be either specified as timedelta or date.
+    """
     # since gets converted from a string to a datetime object
     since = self.__since2days(since)
     until = self.__since2days(until)
@@ -158,7 +164,10 @@ class Merger:
     return file_name
           
   def merge(self, commits=None):
-    """ Submit dummy commits in destination repo with meta data from source repo. """
+    """ Submit dummy commits in destination repo with meta data from source repo.
+    :param commits: Optional list of commits that should be transferred.
+                    Can be specified separately to process the list of commits individually after retrieving them.
+    """
     # if not list of commits is provieded use the list of commits available from class
     # this way someone can retrieve the commits and filter them additionally as they like
     if commits == None:

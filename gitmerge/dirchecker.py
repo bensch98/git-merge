@@ -1,6 +1,8 @@
 import os
 
 class DirectoryChecker:
+  """ Handles all tasks related to other files and directories. """
+
   def __init__(self, _dir='.'):
     self._dir = _dir
 
