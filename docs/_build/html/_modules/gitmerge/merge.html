@@ -90,6 +90,7 @@
     
 
 <div class="viewcode-block" id="Merger"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger">[docs]</a><span class="k">class</span> <span class="nc">Merger</span><span class="p">:</span>
+  <span class="sd">&quot;&quot;&quot; Handles related tasks to performing the transfer of the commits from one or more repositories to the destination repository. &quot;&quot;&quot;</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">src_path</span><span class="p">,</span> <span class="n">dest_path</span><span class="p">,</span> <span class="n">company</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="c1"># repos</span>
@@ -174,7 +175,12 @@
     <span class="k">return</span> <span class="n">commits</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Merger.get_commits"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger.get_commits">[docs]</a>  <span class="k">def</span> <span class="nf">get_commits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since</span><span class="o">=</span><span class="s1">&#39;1w&#39;</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="s1">&#39;0d&#39;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Get all commits in specified range &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Gets all commits in specified range.</span>
+<span class="sd">    :param since: Get all commits beginning from this date. </span>
+<span class="sd">                  Can be either specified as timedelta or date.</span>
+<span class="sd">    :param until: Get all commits until this date. </span>
+<span class="sd">                  Can be either specified as timedelta or date.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># since gets converted from a string to a datetime object</span>
     <span class="n">since</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__since2days</span><span class="p">(</span><span class="n">since</span><span class="p">)</span>
     <span class="n">until</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__since2days</span><span class="p">(</span><span class="n">until</span><span class="p">)</span>
@@ -221,7 +227,10 @@
     <span class="k">return</span> <span class="n">file_name</span>
           
 <div class="viewcode-block" id="Merger.merge"><a class="viewcode-back" href="../../index.html#gitmerge.merge.Merger.merge">[docs]</a>  <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commits</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Submit dummy commits in destination repo with meta data from source repo. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot; Submit dummy commits in destination repo with meta data from source repo.</span>
+<span class="sd">    :param commits: Optional list of commits that should be transferred.</span>
+<span class="sd">                    Can be specified separately to process the list of commits individually after retrieving them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># if not list of commits is provieded use the list of commits available from class</span>
     <span class="c1"># this way someone can retrieve the commits and filter them additionally as they like</span>
     <span class="k">if</span> <span class="n">commits</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>

@@ -39,10 +39,10 @@
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">gitmerge package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-gitmerge.cout">gitmerge.cout module</a></li>
+<li><a class="reference internal" href="#gitmerge-cout-module">gitmerge.cout module</a></li>
 <li><a class="reference internal" href="#module-gitmerge.dirchecker">gitmerge.dirchecker module</a></li>
 <li><a class="reference internal" href="#module-gitmerge.errors">gitmerge.errors module</a></li>
-<li><a class="reference internal" href="#module-gitmerge.gitmerge">gitmerge.gitmerge module</a></li>
+<li><a class="reference internal" href="#gitmerge-gitmerge-module">gitmerge.gitmerge module</a></li>
 <li><a class="reference internal" href="#module-gitmerge.merge">gitmerge.merge module</a></li>
 <li><a class="reference internal" href="#module-gitmerge">Module contents</a></li>
 </ul>
@@ -78,24 +78,8 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="module-gitmerge.cout">
-<span id="gitmerge-cout-module"></span><h2>gitmerge.cout module<a class="headerlink" href="#module-gitmerge.cout" title="Permalink to this headline"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="gitmerge.cout.Cout">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.cout.</span></span><span class="sig-name descname"><span class="pre">Cout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">merger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">commits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">git_dirs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">('hexsha',</span> <span class="pre">'date',</span> <span class="pre">'message')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_msg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="gitmerge.cout.Cout.list">
-<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout.list" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="gitmerge.cout.Cout.summary">
-<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pushable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/cout.html#Cout.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.cout.Cout.summary" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<section id="gitmerge-cout-module">
+<h2>gitmerge.cout module<a class="headerlink" href="#gitmerge-cout-module" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-gitmerge.dirchecker">
 <span id="gitmerge-dirchecker-module"></span><h2>gitmerge.dirchecker module<a class="headerlink" href="#module-gitmerge.dirchecker" title="Permalink to this headline"></a></h2>
@@ -103,6 +87,7 @@
 <dt class="sig sig-object py" id="gitmerge.dirchecker.DirectoryChecker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.dirchecker.</span></span><span class="sig-name descname"><span class="pre">DirectoryChecker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/dirchecker.html#DirectoryChecker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.dirchecker.DirectoryChecker" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles all tasks related to other files and directories.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="gitmerge.dirchecker.DirectoryChecker.git_subdirs">
 <span class="sig-name descname"><span class="pre">git_subdirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">relpath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/dirchecker.html#DirectoryChecker.git_subdirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.dirchecker.DirectoryChecker.git_subdirs" title="Permalink to this definition"></a></dt>
@@ -142,8 +127,8 @@
 </dd></dl>
 
 </section>
-<section id="module-gitmerge.gitmerge">
-<span id="gitmerge-gitmerge-module"></span><h2>gitmerge.gitmerge module<a class="headerlink" href="#module-gitmerge.gitmerge" title="Permalink to this headline"></a></h2>
+<section id="gitmerge-gitmerge-module">
+<h2>gitmerge.gitmerge module<a class="headerlink" href="#gitmerge-gitmerge-module" title="Permalink to this headline"></a></h2>
 </section>
 <section id="module-gitmerge.merge">
 <span id="gitmerge-merge-module"></span><h2>gitmerge.merge module<a class="headerlink" href="#module-gitmerge.merge" title="Permalink to this headline"></a></h2>
@@ -157,16 +142,31 @@
 <dt class="sig sig-object py" id="gitmerge.merge.Merger">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gitmerge.merge.</span></span><span class="sig-name descname"><span class="pre">Merger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">author</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">company</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles related tasks to performing the transfer of the commits from one or more repositories to the destination repository.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="gitmerge.merge.Merger.get_commits">
 <span class="sig-name descname"><span class="pre">get_commits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'1w'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'0d'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger.get_commits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger.get_commits" title="Permalink to this definition"></a></dt>
-<dd><p>Get all commits in specified range</p>
+<dd><p>Gets all commits in specified range.
+:param since: Get all commits beginning from this date.</p>
+<blockquote>
+<div><p>Can be either specified as timedelta or date.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>until</strong> – Get all commits until this date.
+Can be either specified as timedelta or date.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="gitmerge.merge.Merger.merge">
 <span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gitmerge/merge.html#Merger.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gitmerge.merge.Merger.merge" title="Permalink to this definition"></a></dt>
-<dd><p>Submit dummy commits in destination repo with meta data from source repo.</p>
+<dd><p>Submit dummy commits in destination repo with meta data from source repo.
+:param commits: Optional list of commits that should be transferred.</p>
+<blockquote>
+<div><p>Can be specified separately to process the list of commits individually after retrieving them.</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py method">
