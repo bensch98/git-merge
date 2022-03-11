@@ -3,6 +3,7 @@ import os
 
 from gitmerge.dirchecker import DirectoryChecker
 
+
 class TestDirectoryChecker(unittest.TestCase):
 
   def test_git_subdirs(self, relpath=True):
@@ -25,6 +26,7 @@ class TestDirectoryChecker(unittest.TestCase):
     dc._dir = '.'
     subdirs = dc.git_subdirs()
     self.assertFalse(subdirs)
+
 
 if __name__ == '__main__':
   unittest.main()

@@ -1,0 +1,7 @@
+[tool.autopep8]
+max_line_length = 100
+ignore = "E11,E121,E402"
+in-place = true
+indent-size = 2
+aggressive = 1
+recursive = true
