@@ -11,9 +11,9 @@ class TestCommit(unittest.TestCase):
   def test_init(self):
     path = os.path.join(os.path.dirname(__file__), '..')
     repo = Repo(path)
-    self.assertTrue(not isinstance(repo, None))
+    self.assertIsInstance(repo, Repo)
     repo_commits = list(repo.iter_commits('--all'))
-    self.assertTrue(isinstance(repo_commits, list))
+    self.assertIsInstance(repo_commits, list)
 
     # init dummy commits
     commits = []
