@@ -1,5 +1,7 @@
 # GitMerge
 
+[![Documentation Status](https://readthedocs.org/projects/git-merge/badge/?version=main)](https://git-merge.readthedocs.io/en/main/?badge=main)
+
 As many developers have to use a separate Git account during work, a large amount of their work is not tracked in their personal profile which is often a good reference on resumes etc.
 GitMerge solves this problem by importing meta data of your work commits to a dummy repo in your private Git account.
 
