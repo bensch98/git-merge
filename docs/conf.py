@@ -18,7 +18,7 @@ import gitmerge
 
 # -- Project information -----------------------------------------------------
 
-project = 'gitmerge'
+project = 'Gitmerge'
 copyright = '2022, Benedikt Scheffler'
 author = 'Benedikt Scheffler'
 
