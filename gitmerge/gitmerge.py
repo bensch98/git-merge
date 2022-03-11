@@ -37,6 +37,7 @@ def gitmerge():
 @click.option('--list', '-l', '_list', required=False, is_flag=True, help='Only list the commits, instead of committing and pushing them to the mock repo. Red highlighted commits have already been transferred in the past to the specified destination and are automatically ignored.')
 @click.option('--columns', '-c', required=False, default=None, multiple=True, help='Name column that should be included.')
 def merge(author, src, _dir, dest, company, since, until, _list, columns):
+  """ CLI command to perform the merge and control all tasks. """
   
   # check if args are missing or incompatible args where specified
   if src is None and _dir is None:

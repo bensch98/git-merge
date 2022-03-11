@@ -12,13 +12,13 @@ COLUMN_FORMATS = {
 
 class Cout:
   def __init__(self, merger, commits, git_dirs, columns=('hexsha', 'date', 'message'), show_msg=False):
-  """ Manages all outputs to the terminal.
-  :param merger: Merger object.
-  :param commits: All commits, that should be printed out.
-  :param git_dirs: Parent directory that contains all repositories being listed.
-  :param columns: Columns that should be listed. Possible columns: hexsha, date, message, idx, repository, company.
-  :show_msg: If True, the commit message will be shown. If False the commit message is hashed.
-  """
+    """ Manages all outputs to the terminal.
+    :param merger: Merger object.
+    :param commits: All commits, that should be printed out.
+    :param git_dirs: Parent directory that contains all repositories being listed.
+    :param columns: Columns that should be listed. Possible columns: hexsha, date, message, idx, repository, company.
+    :show_msg: If True, the commit message will be shown. If False the commit message is hashed.
+    """
     self.merger = merger
     self.commits = commits
     self.git_dirs = git_dirs
