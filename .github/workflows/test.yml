@@ -1,6 +1,10 @@
 name: gitmerge
 
 on:
+  push:
+    branches:
+    - main
+    - dev/test
   pull_request:
     branches:
     - main
@@ -62,26 +66,18 @@ jobs:
   autopep8:
     name: autopep8
     needs: build
-    if: startsWith(github.head_ref, 'autopep8-patches') == false && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
 
     - name: autopep8
       uses: peter-evans/autopep8@v1
       with:
-        args: --exit-code --recursive --in-place --aggressive --aggressive --indent-size 2 --ignore E11 --ignore E121 .
-
-    - name: Set autopep8 branch name
-      id: vars
-      run: echo ::set-output name=branch-name::"autopep8-patches/${{ github.head_ref }}"
+        args: --global-config .pep8 .
 
     - name: Create Pull Request
-      if: steps.autopep8.outputs.exit-code == 2
       uses: peter-evans/create-pull-request@v3
       with:
         commit-message: autopep8 action fixes
@@ -89,7 +85,7 @@ jobs:
         body: This is an auto-generated PR with fixes by autopep8.
         labels: autopep8, automated pr
         reviewers: bensch98
-        branch: ${{ steps.vars.outputs.branch-name }}
+        branch: autopep8-patches
     
     - name: Fail if autopep8 made changes
       if: steps.autopep8.outputs.exit-code == 2
