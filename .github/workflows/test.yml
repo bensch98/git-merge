@@ -74,7 +74,7 @@ jobs:
     - name: autopep8
       uses: peter-evans/autopep8@v1
       with:
-        args: --global-config .pep8 .
+        args: --exit-code --recursive --in-place --aggressive --aggressive --indent-size 2 --ignore E11 --ignore E121 .
 
     - name: Set autopep8 branch name
       id: vars
