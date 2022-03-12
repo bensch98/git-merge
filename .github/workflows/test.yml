@@ -1,10 +1,6 @@
 name: gitmerge
 
 on:
-  push:
-    branches:
-    - main
-    - dev/test
   pull_request:
     branches:
     - main
@@ -66,27 +62,26 @@ jobs:
   autopep8:
     name: autopep8
     needs: build
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        token: $${{ secrets.REPO_ACCESS_TOKEN }}
+        ref: ${{ github.head_ref }}
 
     - name: autopep8
+      id: autopep8
       uses: peter-evans/autopep8@v1
       with:
         args: --global-config .pep8 .
 
-    - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v3
-      with:
-        commit-message: autopep8 action fixes
-        title: Fixes by autopep8 action
-        body: This is an auto-generated PR with fixes by autopep8.
-        labels: autopep8, automated pr
-        reviewers: bensch98
-        branch: autopep8-patches
-    
-    - name: Fail if autopep8 made changes
+    - name: Commit autopep8 changes
       if: steps.autopep8.outputs.exit-code == 2
-      run: exit 1
+      run: |
+        git config --global user.name 'bensch98'
+        git config --global user.email 'scheffler.benedikt@googlemail.com'
+        git commit -am 'automated autopep8 fixes'
+        git push
