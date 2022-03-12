@@ -5,3 +5,4 @@ in-place = true
 indent-size = 2
 aggressive = 1
 recursive = true
+exit-code = true
